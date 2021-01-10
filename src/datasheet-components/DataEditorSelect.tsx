@@ -69,7 +69,7 @@ const DataEditorSelect: <T extends Item>(
 
       let value
       if (!column.isRequired) {
-        if (cell.value === !parsedValue) {
+        if (cell.value !== parsedValue) {
           value = parsedValue
         } else {
           value = null
