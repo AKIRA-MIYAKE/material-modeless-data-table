@@ -1,8 +1,11 @@
-import React, { useState, useMemo, useCallback } from 'react'
+import React, { ChangeEventHandler, useState, useMemo, useCallback } from 'react'
 
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
 import Paper from '@material-ui/core/Paper'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Switch from '@material-ui/core/Switch'
 import TableContainer from '@material-ui/core/TableContainer'
 
 import ModelessDataTable, {
@@ -24,6 +27,55 @@ type ExampleItem = {
 }
 
 const App = () => {
+  const [isTableSizeSmall, setIsTableSizeSmall] = useState(false)
+  const [isReadOnly, setIsReadOnly] = useState(false)
+  const [isTableHeaderHidden, setIsTableHeaderHidden] = useState(false)
+  const [isReorderDisabled, setIsReorderDisabled] = useState(false)
+  const [isDeleteDisabled, setIsDeleteDisabled] = useState(false)
+  const [isInsertDisabled, setIsInsertDisabled] = useState(false)
+
+  const onTableSizeSwitchChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsTableSizeSmall(event.target.checked)
+    },
+    []
+  )
+
+  const onReadOnlySwitchChage = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsReadOnly(event.target.checked)
+    },
+    []
+  )
+
+  const onTableHeaderHiddenSwitchChage = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsTableHeaderHidden(event.target.checked)
+    },
+    []
+  )
+
+  const onReorderDisabledSwitchChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsReorderDisabled(event.target.checked)
+    },
+    []
+  )
+
+  const onDeleteDisabledSwitchChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsDeleteDisabled(event.target.checked)
+    },
+    []
+  )
+
+  const onInsertDisabledSwitchChange = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsInsertDisabled(event.target.checked)
+    },
+    []
+  )
+
   const [items, setItems] = useState<NullableItem<ExampleItem>[]>(() => {
     return [
       {
@@ -161,19 +213,63 @@ const App = () => {
 
   return (
     <Container>
-      <Box padding={2}>
-        <TableContainer component={Paper}>
-          <ModelessDataTable<ExampleItem>
-            id="example"
-            items={items}
-            columns={columns}
-            onReorder={onReorder}
-            onChangeAtIndex={onChangeAtIndex}
-            onDeleteAtIndex={onDeleteAtIndex}
-            onInsertAtLast={onInsertAtLast}
-          />
-        </TableContainer>
+      <Box marginY={2}>
+        <Paper>
+          <Box padding={2}>
+            <FormGroup row>
+              <FormControlLabel
+                control={<Switch checked={isTableSizeSmall} onChange={onTableSizeSwitchChange} />}
+                label="Small"
+              />
+
+              <FormControlLabel
+                control={<Switch checked={isTableHeaderHidden} onChange={onTableHeaderHiddenSwitchChage} />}
+                label="isTableHeaderHidden"
+              />
+            </FormGroup>
+
+            <FormGroup row>
+              <FormControlLabel
+                control={<Switch checked={isReadOnly} onChange={onReadOnlySwitchChage} />}
+                label="isReadOnly"
+              />
+
+              <FormControlLabel
+                control={<Switch checked={isReorderDisabled} onChange={onReorderDisabledSwitchChange} />}
+                label="isReorderDisabled"
+              />
+
+              <FormControlLabel
+                control={<Switch checked={isDeleteDisabled} onChange={onDeleteDisabledSwitchChange} />}
+                label="isDeleteDisabled"
+              />
+
+              <FormControlLabel
+                control={<Switch checked={isInsertDisabled} onChange={onInsertDisabledSwitchChange} />}
+                label="isInsertDisabled"
+              />
+            </FormGroup>
+          </Box>
+        </Paper>
       </Box>
+
+      <TableContainer component={Paper}>
+        <ModelessDataTable<ExampleItem>
+          id="example"
+          items={items}
+          columns={columns}
+          onReorder={onReorder}
+          onChangeAtIndex={onChangeAtIndex}
+          onDeleteAtIndex={onDeleteAtIndex}
+          onInsertAtLast={onInsertAtLast}
+          tableSize={isTableSizeSmall ? 'small' : 'medium'}
+          isReadOnly={isReadOnly}
+          isTableHeaderHidden={isTableHeaderHidden}
+          isReorderDisabled={isReorderDisabled}
+          isDeleteDisabled={isDeleteDisabled}
+          isInsertDisabled={isInsertDisabled}
+        />
+      </TableContainer>
     </Container>
   )
 }
