@@ -4,6 +4,8 @@
 
 [![NPM](https://img.shields.io/npm/v/material-modeless-data-table.svg)](https://www.npmjs.com/package/material-modeless-data-table)
 
+Demo here: https://akira-miyake.github.io/material-modeless-data-table/
+
 ## Install
 
 ```bash
