@@ -62,7 +62,7 @@ const CellRenderer: <T extends Item>(
   onDoubleClick,
   children,
 }) => {
-  const { items, columns } = tableProps
+  const { items, columns, isReadOnly } = tableProps
 
   const cellClasses = useCellStyles()
   const rendererClasses = useRendererStyles()
@@ -92,12 +92,19 @@ const CellRenderer: <T extends Item>(
       classes.push(rendererClasses.error)
     }
 
-    if (column.isReadOnly) {
+    if (isReadOnly || column.isReadOnly) {
       classes.push(rendererClasses.readOnly)
     }
 
     return classes.join(' ')
-  }, [selected, editing, rendererClasses, errorMessage, column.isReadOnly])
+  }, [
+    isReadOnly,
+    selected,
+    editing,
+    rendererClasses,
+    errorMessage,
+    column.isReadOnly,
+  ])
 
   const cellStyle = useMemo(() => {
     const { width, minWidth, maxWidth, textAlign } = column.style || {}
