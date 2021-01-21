@@ -169,7 +169,7 @@ const useData = <T extends Item>(
       const updatedItems = items.filter((_, index) => index !== srcIndex)
       updatedItems.splice(destIndex, 0, targetItem)
 
-      onReorder({ items: updatedItems })
+      onReorder({ items: updatedItems, srcIndex, destIndex })
     },
     [items, onReorder]
   )

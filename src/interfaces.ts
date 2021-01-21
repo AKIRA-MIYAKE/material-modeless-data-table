@@ -58,6 +58,8 @@ export type Column<T extends Item> = {
 
 export type ReorderHandler<T extends Item> = (event: {
   items: NullableItem<T>[]
+  srcIndex: number
+  destIndex: number
 }) => void
 
 export type ChangeAtIndexHandler<T extends Item> = (event: {
