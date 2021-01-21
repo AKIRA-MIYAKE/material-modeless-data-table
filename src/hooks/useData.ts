@@ -110,7 +110,7 @@ const useData = <T extends Item>(
 
         const index = row
         const oldItem = items[index]
-        const column = columns[col]
+        const column = columns.filter((column) => !column.isHidden)[col]
 
         let updatedValue = value
         if (typeof updatedValue === 'string' && updatedValue.length === 0) {

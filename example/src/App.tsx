@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, useState, useMemo, useCallback } from 'react'
+import React, { ChangeEventHandler, useState, useMemo, useCallback, useEffect } from 'react'
 
 import Container from '@material-ui/core/Container'
 import Box from '@material-ui/core/Box'
@@ -21,6 +21,7 @@ import 'material-modeless-data-table/dist/index.css'
 type ExampleItem = {
   a: string
   b: string
+  hidden: string
   c: number
   d: boolean
   e: string
@@ -81,6 +82,7 @@ const App = () => {
       {
         a: 'a0',
         b: 'b0',
+        hidden: 'this param is hidden',
         c: 0,
         d: true,
         e: new Date().toISOString(),
@@ -88,6 +90,7 @@ const App = () => {
       {
         a: 'a1',
         b: 'b1',
+        hidden: 'this param is hidden',
         c: 1,
         d: false,
         e: new Date().toISOString(),
@@ -95,6 +98,7 @@ const App = () => {
       {
         a: 'a2',
         b: 'b2',
+        hidden: 'this param is hidden',
         c: 2,
         d: null,
         e: new Date().toISOString(),
@@ -133,6 +137,12 @@ const App = () => {
           width: '12rem',
           minWidth: '12rem',
         }
+      },
+      {
+        keyProp: 'hidden',
+        valueType: 'string',
+        defualtValue: 'this param is hidden',
+        isHidden: true,
       },
       {
         keyProp: 'c',
@@ -210,6 +220,10 @@ const App = () => {
     },
     [items]
   )
+
+  useEffect(() => {
+    console.log(items)
+  }, [items])
 
   return (
     <Container>

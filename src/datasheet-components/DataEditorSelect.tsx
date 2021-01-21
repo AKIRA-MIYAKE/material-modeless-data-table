@@ -52,7 +52,7 @@ const DataEditorSelect: <T extends Item>(
   const [isOpen, setIsOpen] = useState(false)
 
   const column = useMemo(() => {
-    return columns[col]
+    return columns.filter((column) => !column.isHidden)[col]
   }, [columns, col])
 
   const onMenuItemMouseDown = useCallback<MouseEventHandler<HTMLLIElement>>(

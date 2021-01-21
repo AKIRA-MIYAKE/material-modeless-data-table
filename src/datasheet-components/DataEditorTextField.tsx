@@ -65,7 +65,7 @@ const DataEditorTextField: <T extends Item>(
   }, [items, row])
 
   const column = useMemo(() => {
-    return columns[col]
+    return columns.filter((column) => !column.isHidden)[col]
   }, [columns, col])
 
   const defaultValue = useMemo(() => cell.value, [cell.value])

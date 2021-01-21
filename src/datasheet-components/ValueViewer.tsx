@@ -9,7 +9,7 @@ const ValueViewer: <T extends Item>(
   const { columns } = tableProps
 
   const column = useMemo(() => {
-    return columns[col]
+    return columns.filter((column) => !column.isHidden)[col]
   }, [columns, col])
 
   const viewerStyle = useMemo(() => {

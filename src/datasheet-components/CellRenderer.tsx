@@ -76,7 +76,7 @@ const CellRenderer: <T extends Item>(
   }, [items, row])
 
   const column = useMemo(() => {
-    return columns[col]
+    return columns.filter((column) => !column.isHidden)[col]
   }, [columns, col])
 
   const rendererClassName = useMemo(() => {

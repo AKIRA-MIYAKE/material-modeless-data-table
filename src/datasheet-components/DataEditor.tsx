@@ -12,7 +12,7 @@ const DataEditor: <T extends Item>(props: DataEditorProps<T>) => JSX.Element = (
   const { columns } = props.tableProps
 
   const column = useMemo(() => {
-    return columns[props.col]
+    return columns.filter((column) => !column.isHidden)[props.col]
   }, [columns, props.col])
 
   if (column.valueType === 'boolean') {
