@@ -7,6 +7,7 @@ export type ModelessDataTableProps<T extends Item> = {
   columns: Column<T>[]
   tableSize?: 'small' | 'medium'
   isReadOnly?: boolean
+  isTemporaryReadOnly?: boolean
   isTableHeaderHidden?: boolean
   isReorderDisabled?: boolean
   isDeleteDisabled?: boolean

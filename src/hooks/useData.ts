@@ -18,8 +18,9 @@ export const itemToRowCells = <T extends Item>(params: {
   id: string
   columns: Column<T>[]
   isReadOnly?: boolean
+  isTemporaryReadOnly?: boolean
 }): DataSheetCell[] => {
-  const { item, index, id, columns, isReadOnly } = params
+  const { item, index, id, columns, isReadOnly, isTemporaryReadOnly } = params
 
   return columns
     .filter((column) => !column.isHidden)
@@ -38,7 +39,7 @@ export const itemToRowCells = <T extends Item>(params: {
         value,
         valueType: column.valueType,
         key,
-        readOnly: isReadOnly || column.isReadOnly,
+        readOnly: isReadOnly || isTemporaryReadOnly || column.isReadOnly,
         ...column.cell,
       }
     })
@@ -81,6 +82,7 @@ const useData = <T extends Item>(
     items,
     columns,
     isReadOnly,
+    isTemporaryReadOnly,
     onReorder,
     onChangeAtIndex,
     onDeleteAtIndex,
@@ -95,9 +97,10 @@ const useData = <T extends Item>(
         id,
         columns,
         isReadOnly,
+        isTemporaryReadOnly,
       })
     )
-  }, [id, items, columns, isReadOnly])
+  }, [id, items, columns, isReadOnly, isTemporaryReadOnly])
 
   const onCellsChanged = useCallback<DataSheetCellsChangedHandler>(
     (changes) => {

@@ -14,14 +14,23 @@ const useCellStyles = makeStyles((theme) => ({
 export interface InsertActionRowProps {
   colspan: number
   onInsert: () => void
+  isDisabled?: boolean
 }
 
-const InsertActionRow: FC<InsertActionRowProps> = ({ colspan, onInsert }) => {
+const InsertActionRow: FC<InsertActionRowProps> = ({
+  colspan,
+  onInsert,
+  isDisabled,
+}) => {
   const cellClasses = useCellStyles()
 
   const onButtoNClick = useCallback(() => {
+    if (isDisabled) {
+      return
+    }
+
     onInsert()
-  }, [onInsert])
+  }, [isDisabled, onInsert])
 
   return (
     <TableRow>
@@ -30,6 +39,7 @@ const InsertActionRow: FC<InsertActionRowProps> = ({ colspan, onInsert }) => {
           variant='outlined'
           color='primary'
           size='small'
+          disabled={isDisabled}
           onClick={onButtoNClick}
         >
           Add

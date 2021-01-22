@@ -22,7 +22,13 @@ const uesRowStyles = makeStyles((theme) => ({
 const RowRenderer: <T extends Item>(
   props: PropsWithChildren<RowRendererProps<T>>
 ) => JSX.Element = ({ tableProps, onDelete, row, children }) => {
-  const { id, isReadOnly, isReorderDisabled, isDeleteDisabled } = tableProps
+  const {
+    id,
+    isReadOnly,
+    isTemporaryReadOnly,
+    isReorderDisabled,
+    isDeleteDisabled,
+  } = tableProps
 
   const rowClasses = uesRowStyles()
 
@@ -39,7 +45,10 @@ const RowRenderer: <T extends Item>(
       <TableRow classes={rowClasses}>
         {children}
         {!isReadOnly && !isDeleteDisabled && (
-          <DeleteActionCell onDelete={onDeleteActionCellDelete} />
+          <DeleteActionCell
+            onDelete={onDeleteActionCellDelete}
+            isDisabled={isTemporaryReadOnly}
+          />
         )}
       </TableRow>
     )
@@ -49,7 +58,7 @@ const RowRenderer: <T extends Item>(
     <Draggable
       draggableId={draggableId}
       index={row}
-      isDragDisabled={isReorderDisabled}
+      isDragDisabled={isReorderDisabled || isTemporaryReadOnly}
     >
       {(provided, snapshot) => (
         <TableRow
@@ -61,7 +70,10 @@ const RowRenderer: <T extends Item>(
           <ReorderActionCell {...provided.dragHandleProps} />
           {children}
           {!isDeleteDisabled && (
-            <DeleteActionCell onDelete={onDeleteActionCellDelete} />
+            <DeleteActionCell
+              onDelete={onDeleteActionCellDelete}
+              isDisabled={isTemporaryReadOnly}
+            />
           )}
         </TableRow>
       )}

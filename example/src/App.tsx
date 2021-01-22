@@ -30,6 +30,7 @@ type ExampleItem = {
 const App = () => {
   const [isTableSizeSmall, setIsTableSizeSmall] = useState(false)
   const [isReadOnly, setIsReadOnly] = useState(false)
+  const [isTemporaryReadOnly, setIsTemporaryReadOnly] = useState(false)
   const [isTableHeaderHidden, setIsTableHeaderHidden] = useState(false)
   const [isReorderDisabled, setIsReorderDisabled] = useState(false)
   const [isDeleteDisabled, setIsDeleteDisabled] = useState(false)
@@ -45,6 +46,13 @@ const App = () => {
   const onReadOnlySwitchChage = useCallback<ChangeEventHandler<HTMLInputElement>>(
     (event) => {
       setIsReadOnly(event.target.checked)
+    },
+    []
+  )
+
+  const onTemporaryReadOnlySwitchChage = useCallback<ChangeEventHandler<HTMLInputElement>>(
+    (event) => {
+      setIsTemporaryReadOnly(event.target.checked)
     },
     []
   )
@@ -249,6 +257,11 @@ const App = () => {
               />
 
               <FormControlLabel
+                control={<Switch checked={isTemporaryReadOnly} onChange={onTemporaryReadOnlySwitchChage} />}
+                label="isTemporaryReadOnly"
+              />
+
+              <FormControlLabel
                 control={<Switch checked={isReorderDisabled} onChange={onReorderDisabledSwitchChange} />}
                 label="isReorderDisabled"
               />
@@ -278,6 +291,7 @@ const App = () => {
           onInsertAtLast={onInsertAtLast}
           tableSize={isTableSizeSmall ? 'small' : 'medium'}
           isReadOnly={isReadOnly}
+          isTemporaryReadOnly={isTemporaryReadOnly}
           isTableHeaderHidden={isTableHeaderHidden}
           isReorderDisabled={isReorderDisabled}
           isDeleteDisabled={isDeleteDisabled}

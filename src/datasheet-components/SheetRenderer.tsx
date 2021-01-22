@@ -24,6 +24,7 @@ const SheetRenderer: <T extends Item>(
     columns,
     tableSize,
     isReadOnly,
+    isTemporaryReadOnly,
     isTableHeaderHidden,
     isReorderDisabled,
     isDeleteDisabled,
@@ -112,7 +113,11 @@ const SheetRenderer: <T extends Item>(
 
     return (
       <TableFooter>
-        <InsertActionRow onInsert={onInsert} colspan={insertActionRowColspan} />
+        <InsertActionRow
+          isDisabled={isTemporaryReadOnly}
+          onInsert={onInsert}
+          colspan={insertActionRowColspan}
+        />
       </TableFooter>
     )
   }, [isReadOnly, isInsertDisabled, onInsert, insertActionRowColspan])

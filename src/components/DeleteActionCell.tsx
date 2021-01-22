@@ -12,18 +12,26 @@ const useCellStyles = makeStyles(() => ({
 
 export interface DeleteActionCellProps {
   onDelete: () => void
+  isDisabled?: boolean
 }
 
-const DeleteActionCell: FC<DeleteActionCellProps> = ({ onDelete }) => {
+const DeleteActionCell: FC<DeleteActionCellProps> = ({
+  onDelete,
+  isDisabled,
+}) => {
   const cellClasses = useCellStyles()
 
   const onButtonClick = useCallback(() => {
+    if (isDisabled) {
+      return
+    }
+
     onDelete()
-  }, [onDelete])
+  }, [isDisabled, onDelete])
 
   return (
     <TableCell classes={cellClasses} padding='checkbox'>
-      <IconButton onClick={onButtonClick}>
+      <IconButton disabled={isDisabled} onClick={onButtonClick}>
         <DeleteIcon />
       </IconButton>
     </TableCell>
