@@ -13,7 +13,9 @@ import { Item, DataEditorProps } from '../interfaces'
 
 const DataEditorCheckbox: <T extends Item>(
   props: DataEditorProps<T>
-) => JSX.Element = ({ cell, onCommit, onRevert }) => {
+) => JSX.Element = ({ tableProps, cell, row, onCommit, onRevert }) => {
+  const { onBeginEditing, onEndEditing } = tableProps
+
   const [isIndeterminate, setIsIndeterminate] = useState(cell.value === null)
 
   const checkboxInputRef = useRef<HTMLInputElement>() as RefObject<HTMLInputElement>
@@ -66,6 +68,14 @@ const DataEditorCheckbox: <T extends Item>(
   useEffect(() => {
     checkboxInputRef.current && checkboxInputRef.current.focus()
   }, [checkboxInputRef])
+
+  useEffect(() => {
+    onBeginEditing && onBeginEditing({ index: row })
+
+    return () => {
+      onEndEditing && onEndEditing({ index: row })
+    }
+  }, [row, onBeginEditing, onEndEditing])
 
   return (
     <Checkbox

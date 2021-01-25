@@ -51,7 +51,7 @@ const DataEditorTextField: <T extends Item>(
   onRevert,
   onKeyDown,
 }) => {
-  const { items, columns } = tableProps
+  const { items, columns, onBeginEditing, onEndEditing } = tableProps
 
   const textFieldClasses = useTextFieldStyles()
   const inputPropsClasses = useInputPropsStyles()
@@ -106,6 +106,14 @@ const DataEditorTextField: <T extends Item>(
   useEffect(() => {
     inputPropsRef.current && inputPropsRef.current.focus()
   }, [inputPropsRef])
+
+  useEffect(() => {
+    onBeginEditing && onBeginEditing({ index: row })
+
+    return () => {
+      onEndEditing && onEndEditing({ index: row })
+    }
+  }, [row, onBeginEditing, onEndEditing])
 
   return (
     <TextField

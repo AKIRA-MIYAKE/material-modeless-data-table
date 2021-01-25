@@ -130,6 +130,8 @@ export type ModelessDataTableProps<T extends Item> = {
   onChangeAtIndex?: ChangeAtIndexHandler<T>
   onDeleteAtIndex?: DeleteAtIndexHandler<T>
   onInsertAtLast?: InsertAtLastHandler<T>
+  onBeginEditing?: BeginEditingHandler
+  onEndEditing?: EndEditingHandler
 }
 
 export type NullableItem<T extends Item> = { [P in keyof T]: T[P] | null }
@@ -173,6 +175,8 @@ export type Column<T extends Item> = {
 
 export type ReorderHandler<T extends Item> = (event: {
   items: NullableItem<T>[]
+  srcIndex: number
+  destIndex: number
 }) => void
 
 export type ChangeAtIndexHandler<T extends Item> = (event: {
@@ -190,6 +194,9 @@ export type InsertAtLastHandler<T extends Item> = (event: {
   newItem: NullableItem<T>
   index: number
 }) => void
+
+export type BeginEditingHandler = (event: { index: number }) => void
+export type EndEditingHandler = (event: { index: number }) => void
 ```
 
 ## License
