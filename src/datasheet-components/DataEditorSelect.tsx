@@ -43,8 +43,8 @@ const parseTargetValue: (
 
 const DataEditorSelect: <T extends Item>(
   props: DataEditorProps<T>
-) => JSX.Element = ({ tableProps, cell, col, onCommit, onRevert }) => {
-  const { columns } = tableProps
+) => JSX.Element = ({ tableProps, cell, row, col, onCommit, onRevert }) => {
+  const { columns, onBeginEditing, onEndEditing } = tableProps
 
   const rootClasses = useRootStyles()
   const selectClasses = useSelectStyles()
@@ -127,6 +127,14 @@ const DataEditorSelect: <T extends Item>(
   useEffect(() => {
     setIsOpen(true)
   }, [])
+
+  useEffect(() => {
+    onBeginEditing && onBeginEditing({ index: row })
+
+    return () => {
+      onEndEditing && onEndEditing({ index: row })
+    }
+  }, [row, onBeginEditing, onEndEditing])
 
   if (!column.enum) {
     throw new Error('Never')

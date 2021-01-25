@@ -15,6 +15,8 @@ import ModelessDataTable, {
   ChangeAtIndexHandler,
   DeleteAtIndexHandler,
   InsertAtLastHandler,
+  BeginEditingHandler,
+  EndEditingHandler,
 } from 'material-modeless-data-table'
 import 'material-modeless-data-table/dist/index.css'
 
@@ -229,6 +231,20 @@ const App = () => {
     [items]
   )
 
+  const onBeginEditing = useCallback<BeginEditingHandler>(
+    ({ index }) => {
+      console.log(`Begin editing: ${index}`)
+    },
+    []
+  )
+
+  const onEndEditing = useCallback<EndEditingHandler>(
+    ({ index }) => {
+      console.log(`End editing: ${index}`)
+    },
+    []
+  )
+
   useEffect(() => {
     console.log(items)
   }, [items])
@@ -289,6 +305,8 @@ const App = () => {
           onChangeAtIndex={onChangeAtIndex}
           onDeleteAtIndex={onDeleteAtIndex}
           onInsertAtLast={onInsertAtLast}
+          onBeginEditing={onBeginEditing}
+          onEndEditing={onEndEditing}
           tableSize={isTableSizeSmall ? 'small' : 'medium'}
           isReadOnly={isReadOnly}
           isTemporaryReadOnly={isTemporaryReadOnly}
